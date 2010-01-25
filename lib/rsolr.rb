@@ -15,6 +15,11 @@ module RSolr
     Client.new(Connection::NetHttp.new(*args))
   end
   
+  def self.async_connect *args
+    rsolr = Client.new(Connection::EventMachine.new(*args))
+    block_given? ? (yield rsolr) : rsolr
+  end
+
   # DirectSolrConnection (jruby only). Example:
   #   RSolr.direct_connect 'path/to/solr/distribution'
   #   RSolr.direct_connect :dist_dir=>'path/to/solr/distribution', :home_dir=>'/path/to/solrhome'

@@ -2,6 +2,7 @@ module RSolr::Connection
   
   autoload :Direct, 'rsolr/connection/direct'
   autoload :NetHttp, 'rsolr/connection/net_http'
+  autoload :EventMachine, 'rsolr/connection/event_machine'
   
   # Helpful utility methods for building queries to a Solr server
   module Utils

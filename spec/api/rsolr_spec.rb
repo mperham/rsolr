@@ -1,21 +1,41 @@
 describe RSolr do
   
-  it 'should respond to #connect' do
-    RSolr.should respond_to(:connect)
-  end
+  context 'connect' do
+    it 'should respond to #connect' do
+      RSolr.should respond_to(:connect)
+    end
   
-  it 'can accept options without connection type' do
-    lambda{RSolr.connect :url=>'http://localhost:8983/solr'}.should_not raise_error
-  end
+    it 'can accept options without connection type' do
+      lambda{RSolr.connect :url=>'http://localhost:8983/solr'}.should_not raise_error
+    end
 
-  it 'can only accept an options hash for a the #connect method' do
-    lambda{RSolr.connect :blah}.should raise_error
+    it 'can only accept an options hash for a the #connect method' do
+      lambda{RSolr.connect :blah}.should raise_error
+    end
+  
+    it 'should create an instance of RSolr::Connection::HTTP as the #connection' do
+      expected_class = RSolr::Connection::NetHttp
+      RSolr.connect.connection.should be_a(expected_class)
+      RSolr.connect(:url=>'blah').connection.should be_a(expected_class)
+    end
   end
   
-  it 'should create an instance of RSolr::Connection::HTTP as the #connection' do
-    expected_class = RSolr::Connection::NetHttp
-    RSolr.connect.connection.should be_a(expected_class)
-    RSolr.connect(:url=>'blah').connection.should be_a(expected_class)
+  context 'async_connect' do
+
+    it 'can accept options without connection type' do
+      lambda{RSolr.async_connect :url=>'http://localhost:8983/solr'}.should_not raise_error
+    end
+
+    it 'can only accept an options hash for a the #connect method' do
+      lambda{RSolr.async_connect :blah}.should raise_error
+    end
+  
+    it 'should create an instance of RSolr::Connection::HTTP as the #connection' do
+      expected_class = RSolr::Connection::EventMachine
+      RSolr.async_connect.connection.should be_a(expected_class)
+      RSolr.async_connect(:url=>'blah').connection.should be_a(expected_class)
+    end
+
   end
   
   if jruby?
