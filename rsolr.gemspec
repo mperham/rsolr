@@ -15,6 +15,7 @@ Gem::Specification.new do |s|
     "lib/rsolr/client.rb",
     "lib/rsolr/connection/direct.rb",
     "lib/rsolr/connection/net_http.rb",
+    "lib/rsolr/connection/event_machine.rb",
     "lib/rsolr/connection.rb",
     "lib/rsolr/message.rb",
     "lib/rsolr.rb",
